@@ -1,0 +1,17 @@
+{
+  "name": "restfullapi",
+  "version": "1.0.0",
+  "description": "Restful API example",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "app.js"
+  },
+  "author": "Serey <balakin@unom.ru>",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.5"
+  }
+}
