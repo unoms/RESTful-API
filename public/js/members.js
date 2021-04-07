@@ -9,6 +9,19 @@ const members = [{
 {
     "id": 21,
     "name": "Gena"
-}];
+},
+{
+    "id": 10,
+    "name": "Maria"
+},
+{
+    "id": 12,
+    "name": "Olga"
+},
+{
+    "id": 23,
+    "name": "Alex"
+}
+];
 
 module.exports = members;

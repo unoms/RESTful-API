@@ -1,6 +1,6 @@
-const express = require('express');
-const path = require('path');
-const members = require('./members');
+const express = require('express')
+const path = require('path')
+const members = require('./public/js/members')
 var cors = require('cors')  
 
 const app = express();
@@ -12,7 +12,7 @@ app.use(cors());
 //Use this library to handle JSON
 app.use(express.json())
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
 
 //Get All members
 app.get('/api/members', (req, res)=>{ //if an user hits http://localhost:3000/api/members
@@ -59,18 +59,22 @@ app.get('/api/members/:id/:name', (req, res)=>{
 });
 
 //POST
+// curl -H "Content-Type: application/json" -d "{\"name\": \"Name\"}" localhost:3000/api/members -XPOST
 app.post('/api/members', (req, res)=>{
     //Actually here should be a validation of the user input
     if(!req.body.name || req.body.name.length < 3){
-    
-        console.log(req.body.name.length)
 
         //400 is Bad request
-        res.status(400).end('Name should be longer than 3 characters...');
+        res.status(400).json({msg: 'Name should be longer than 3 characters...'});
         return;
     }
+    //Find id for a new member
+    let id = members.length + 1
+    while(members.find(member => member.id === id)){
+        id += 1
+    }
 
-    const member = {id: members.length + 1, name: req.body.name};
+    const member = {id: id, name: req.body.name};
     members.push(member);
     //it's a convention if we add a new object, we should return this object in response
     //The idea is that by adding a new object, we creat ID for this object and it could be needed
@@ -85,7 +89,7 @@ app.put('/api/members/:id', (req, res)=>{
         //Actually here should be a validation of the user input
         if(!req.body.name || req.body.name.length < 3){
             //400 is Bad request
-            res.status(400).end('Name should be longer than 3 characters');
+            res.status(400).json({msg: 'Name should be longer than 3 characters'});
             return;
         }
         member.name = req.body.name;
@@ -93,7 +97,6 @@ app.put('/api/members/:id', (req, res)=>{
     }else{
         res.status(404).json({msg: `There's no member with id=${req.params.id}`});
     }
-
 });
 
 //Delete
